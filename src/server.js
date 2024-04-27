@@ -1,22 +1,5 @@
 import express from 'express';
 import { MongoClient } from 'mongodb';
-// PUT /articles/learn-react/upvote
-
-// let articlesInfo = [{
-//     name: 'learn-react',
-//     upvotes: 0,
-//     comments: [],
-// },
-//  {
-//    name: 'learn-node',
-//    upvote: 0,
-//    comments: [],
-//  },
-// {
-//     name: 'mongodb',
-//     upvote: 0,
-//     comments: [],
-// }]
 
 const app = express();
 app.use(express.json());
@@ -29,7 +12,9 @@ app.get('/api/articles/:name',async(req,res) => {
 
     const db = client.db('react-blog-db');
     const article = await db.collection('articles').findOne({ name});
-})
+
+    res.json(article);
+});
 // app.post('/hello', (req, res) => {
 //    res.send(`Hello ${req.body.name}!`);
 // });
@@ -50,7 +35,7 @@ app.put('/api/articles/:name/upvote', (req,res) => {
    } else {
     res.send('That article doesn\'t exist');
    }
-})
+});
 
 app.post('/api/articles/:name/comments',(req,res) => {
     const {name} = req.params;
